@@ -1,0 +1,52 @@
+local player = game.Players.LocalPlayer
+local classicSwordName = "ClassicSword" -- Değiştirmek isterseniz silahın ismini buraya yazın
+
+local function modifyClassicSword()
+    local character = player.Character
+    local sword = character:FindFirstChild(classicSwordName)
+
+    if sword then
+        local handle = sword:FindFirstChild("Handle")
+        local mesh = sword:FindFirstChild("Mesh")
+
+        if handle then
+            handle.Size = Vector3.new(15, 15, 15)
+        end
+
+        if mesh then
+            mesh:Destroy()
+        end
+
+        sword.Transparency = 0.7
+    end
+end
+
+local function createGUI()
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "RemixGUI"
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 150, 0, 50)
+    frame.Position = UDim2.new(0, 10, 0, 10)
+    frame.BackgroundColor3 = Color3.new(0, 1, 0)
+    frame.BorderSizePixel = 0
+    frame.Parent = gui
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, -10, 1, -10)
+    textLabel.Position = UDim2.new(0, 5, 0, 5)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Text = "Script çalışıyor!"
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.TextSize = 14
+    textLabel.Parent = frame
+
+    gui.Parent = player.PlayerGui
+end
+
+player.CharacterAdded:Connect(function(character)
+    modifyClassicSword()
+end)
+
+createGUI()
+modifyClassicSword()
